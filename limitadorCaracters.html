@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limitador</title>
+    <link href="limitador.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="izq"></div>
+        <div class="principal">
+            <textarea id="message" maxlength="2"></textarea>
+            <div id="counter">
+                <p id="elinputLetra">N. lletres: <input type="number" id="lle" value="" maxlength="2"> </p>
+                <p id="elinputNombre">N. nombres: <input type="number" id="nomb" value="" maxlength="2"> </p>
+            </div>
+        </div>
+        <div class="der"></div>
+    </div>
+
+    <script>
+
+        var messageEle = document.getElementById('message');
+        var inputLletra = document.getElementById('lle');
+        var inputNombre = document.getElementById('nomb');
+        var nletraInput = document.getElementById('elinputLetra');
+        var nnombreInput = document.getElementById('elinputNombre');
+
+        var totalMaxLength = 0, contL = 0;
+
+        var pos = 1, nNumber=1, nLlletra = 1, contAdd = 0, contBorrador = 0, espais = 0;
+
+        var entraN = true; var entraL = true; var e = true;
+        
+
+        function inicial(){
+ 
+            //AGAFEN EL VALOR DEL TEXTAREA
+            inputLletra.value = messageEle.maxLength;
+            inputNombre.value = messageEle.maxLength;
+            messageEle.maxLength = parseInt(inputLletra.value)+parseInt(inputNombre.value);//SUMEM ELS VALORS PER OBTENIR EL MAXLENGTH
+            nletraInput.childNodes[0].nodeValue = "N. lletres: 0 de ";
+            nnombreInput.childNodes[0].nodeValue = "N. nombres: 0 de ";
+
+        }
+        inicial();
+
+        messageEle.addEventListener('input', function(e){
+
+            messageEle.maxLength = parseInt(inputLletra.value)+parseInt(inputNombre.value) + espais ;
+
+            maxNum = inputNombre.value;
+            maxLletra = inputLletra.value;
+
+            let target = e.target;
+
+            // Get the `maxlength` attribute
+            let maxLength = target.getAttribute('maxlength');
+
+            let lengthText = messageEle.value.length;
+
+            if ( lengthText == 0 ){
+                nletraInput.childNodes[0].nodeValue = "N. lletres: " + lengthText + " de "; nletraInput.style.color = "black";
+                nnombreInput.childNodes[0].nodeValue = "N. nombres: " + lengthText + " de "; nnombreInput.style.color = "black";
+            }
+
+            if ( lengthText > 0 ) {
+
+                let valor = target.value;
+                let val = valor.length;
+                
+                if ( val == 0 ){
+                    nLlletra = 1;
+                }else{
+
+                    nLlletra = 0;
+                    nNumber = 0;
+                    espais = 1;
+                    for ( let i=0; i<val; i++ ){
+                        let f = valor[i];
+                        if ( isNaN(f) ){
+                            nLlletra += 1;
+                            if ( nLlletra <= maxLletra ){
+
+                                nletraInput.childNodes[0].nodeValue = "N. lletres: " + nLlletra + " de ";
+                                if ( maxLletra == nLlletra ){
+                                    nletraInput.style.color = "red";
+                                }else nletraInput.style.color = "black";
+
+                            }
+                        }
+                        else if ( f == " " ){
+                            if ( (maxLletra+maxNum) == messageEle.maxLength  ){
+                                console.log("e");
+                            }
+                            else espais += 1;
+                        }
+                        else{
+                            nNumber += 1;
+                            if ( nNumber <= maxNum ){
+
+                                nnombreInput.childNodes[0].nodeValue = "N. nombres: " + nNumber + " de ";
+                                if ( maxNum == nNumber ){
+                                    nnombreInput.style.color = "red";
+                                }else nnombreInput.style.color = "black";
+
+                            }
+                        }
+                    }
+
+                }
+                
+            }    
+        });
+
+        inputLletra.addEventListener('input', function (e) {
+
+            messageEle.maxLength = parseInt(inputLletra.value)+parseInt(inputNombre.value);
+            
+            if ( contL < 1 ){
+                totalMaxLength = inputLletra.value;
+                contL += 1;
+            }
+            else {
+                totalMaxLength = inputLletra.value;
+            }
+        });
+
+        inputNombre.addEventListener('input', function (e) {
+            
+
+            if ( contL < 1 ){
+                totalMaxLength = inputNombre.value;
+                contL += 1;
+            }
+            else {
+                totalMaxLength += 1;
+            }
+
+            totalMaxLength += inputNombre.value;
+        });
+
+    </script>
+
+</body>
+</html>
