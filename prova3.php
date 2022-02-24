@@ -9,4 +9,5 @@ function validateEmail($email) {
 validateEmail($email_first);
 validateEmail($email_second);
 
+</script>
 ?>
