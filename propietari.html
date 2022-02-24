@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patates</title>
+</head>
+<body>
+    
+    <p id="pract"><b>Brandon Sotomayor Jesus</b></p> 
+
+    <script>
+        let s = document.getElementById('pract'); 
+        
+        var currentdate = new Date(); 
+        var datetime = "Data: "+currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + " Hora: "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+
+        let txt = document.createTextNode(datetime);
+
+        s.appendChild(document.createElement('br'));   
+        s.appendChild(txt);
+    </script>
+
+</body>
+</html>
